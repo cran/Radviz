@@ -1,132 +1,172 @@
-## ----echo=FALSE----------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 knitr::opts_chunk$set(warning=FALSE,
                       fig.retina=1,
                       fig.keep='high',
                       fig.align='center')
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(Radviz)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+## -----------------------------------------------------------------------------
 library(bodenmiller)
 data(refPhenoMat)
 data(refFuncMat)
 data(refAnnots)
-refMat <- cbind(refPhenoMat,refFuncMat)
+ref.df <- data.frame(refAnnots,
+                     refPhenoMat,
+                     refFuncMat)
 
-## ------------------------------------------------------------------------
-norm <- apply(refMat,2,do.L,fun=function(x) quantile(x,c(0.025,0.975)))
+## -----------------------------------------------------------------------------
+trans <- function(coln) do.L(coln,fun=function(x) quantile(x,c(0.005,0.995)))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
+hist(ref.df$CD3)
+abline(v=quantile(ref.df$CD3,c(0.005,0.995)),
+       col=2,lty=2)
+
+## -----------------------------------------------------------------------------
 ct.S <- make.S(dimnames(refPhenoMat)[[2]])
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ## compute the similarity matrix
-ct.sim <- cosine(norm)
+ct.sim <- cosine(as.matrix(ref.df[,row.names(ct.S)]))
 ## the current radviz-independent measure of projection efficiency
 in.da(ct.S,ct.sim)
 ## the current radviz-independent measure of projection efficiency
 rv.da(ct.S,ct.sim)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 optim.ct <- do.optim(ct.S,ct.sim,iter=100,n=1000)
 ct.S <- make.S(tail(optim.ct$best,1)[[1]])
 
-## ----echo=FALSE,results='asis'-------------------------------------------
+## ----echo=FALSE,results='asis'------------------------------------------------
 ksink <- lapply(dimnames(refPhenoMat)[[2]],function(x) cat(' *',x,'\n'))
 
-## ----echo=FALSE,results='asis'-------------------------------------------
+## ----echo=FALSE,results='asis'------------------------------------------------
 ksink <- lapply(row.names(ct.S),function(x) cat(' *',x,'\n'))
 
-## ------------------------------------------------------------------------
-ct.rv <- do.radviz(norm,ct.S)
+## -----------------------------------------------------------------------------
+ct.S <- recenter(ct.S,'CD3')
 
-## ------------------------------------------------------------------------
-plot(ct.rv)
+## ----echo=FALSE,results='asis'------------------------------------------------
+ksink <- lapply(row.names(ct.S),function(x) cat(' *',x,'\n'))
 
-## ------------------------------------------------------------------------
-plot(ct.rv,point.shape=1)
+## -----------------------------------------------------------------------------
+ct.rv <- do.radviz(ref.df,ct.S,trans=trans)
 
-## ------------------------------------------------------------------------
-plot(ct.rv,point.shape=1,point.color=refAnnots$Cells)
+## -----------------------------------------------------------------------------
+summary(ct.rv)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
+head(ct.rv)
+
+## -----------------------------------------------------------------------------
+dim(ct.rv)
+
+## -----------------------------------------------------------------------------
+ct.rv
+
+## -----------------------------------------------------------------------------
+plot(ct.rv,anchors.only=FALSE)
+
+## -----------------------------------------------------------------------------
+plot(ct.rv)+
+  geom_point()
+
+## -----------------------------------------------------------------------------
+plot(ct.rv)+
+  geom_point(data=. %>% 
+               arrange(CD4),
+             aes(color=CD4))+
+  scale_color_gradient(low='grey80',high="dodgerblue4")
+
+## -----------------------------------------------------------------------------
 smoothRadviz(ct.rv)
 
-## ------------------------------------------------------------------------
-ct.rv <- do.density(ct.rv,n=100)
+## -----------------------------------------------------------------------------
+smoothRadviz(ct.rv)+
+  geom_point(shape='.',alpha=1/5)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 contour(ct.rv)
 
-## ------------------------------------------------------------------------
-smoothRadviz(ct.rv)
-contour(ct.rv,add=T)
-
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 cur.pop <- 'igm+'
 sub.rv <- subset(ct.rv,refAnnots$Cells==cur.pop)
-smoothRadviz(ct.rv)
-contour(sub.rv,add=T)
+smoothRadviz(ct.rv)+
+  geom_density2d(data=sub.rv$proj$data,
+                 aes(x=rx,y=ry),
+                 color='black')
 
-## ------------------------------------------------------------------------
-ct.rv <- do.hex(ct.rv,n=60,
-		channels=dimnames(refFuncMat)[[2]],
-		ncols=7,
-		use.quantile=T
-)
+## -----------------------------------------------------------------------------
+hexplot(ct.rv)
 
-## ------------------------------------------------------------------------
-hexplot(ct.rv,mincnt=5)
+## -----------------------------------------------------------------------------
+hexplot(ct.rv,color='CD4')
 
-## ------------------------------------------------------------------------
-hexplot(ct.rv,mincnt=2,color='pS6')
+## -----------------------------------------------------------------------------
+hexplot(ct.rv,color='pS6')
 
-## ------------------------------------------------------------------------
-hexplot(ct.rv,mincnt=2,color='pAkt')
+## -----------------------------------------------------------------------------
+hexplot(ct.rv,color='pAkt')
 
-## ------------------------------------------------------------------------
-hexplot(ct.rv,mincnt=2,color='pErk')
+## -----------------------------------------------------------------------------
+hexplot(ct.rv,color='pErk')
 
-## ----results='asis'------------------------------------------------------
+## ----results='asis'-----------------------------------------------------------
 ksink <- lapply(levels(refAnnots$Cells),function(x) cat(' *',x,'\n'))
 
-## ------------------------------------------------------------------------
-library(colorspace)
-pop.norm <- apply(refMat,2,do.L,fun=function(x) quantile(x,c(0.025,0.975)) )
-pop.norm <- apply(pop.norm,2,function(x) tapply(x,refAnnots$Cells,median) )
-pop.rv <- do.radviz(pop.norm,ct.S)
-pop.size <- table(refAnnots$Cells)
-pop.cols <- setNames(rainbow_hcl(length(levels(refAnnots$Cells))),
-                     levels(refAnnots$Cells))
+## -----------------------------------------------------------------------------
+bubbleRadviz(ct.rv,group = 'Cells')
 
-## ----fig.width=6,fig.height=3--------------------------------------------
-par(mfrow=c(1,2))
-bubbleRadviz(pop.rv,
-             bubble.color=pop.cols[dimnames(pop.norm)[[1]]],
-             bubble.size=log(pop.size[dimnames(pop.norm)[[1]]]),
-             scale=0.2,
-             decreasing=TRUE
-)
-plot.new()
-legend("center",
-       legend=names(pop.cols),
-       col=pop.cols,
-       cex=0.8,
-       pch=16,
-       bty='n')
+## -----------------------------------------------------------------------------
+bubbleRadviz(ct.rv,group = 'Cells',color='pS6')
 
-## ------------------------------------------------------------------------
-S6.cols <- setNames(colorRampPalette(blues9)(8)[cut(pop.norm[,'pS6'],
-                                                    breaks=8,
-                                                    labels=F,
-                                                    include.lowest=TRUE)],
-                    dimnames(pop.norm)[[1]])
-bubbleRadviz(pop.rv,
-             bubble.color=S6.cols[dimnames(pop.norm)[[1]]],
-             bubble.fg='grey',
-             bubble.size=log(pop.size[dimnames(pop.norm)[[1]]]),
-             scale=0.2,
-             decreasing=TRUE
-)
+## -----------------------------------------------------------------------------
+data(untreatedPhenoMat)
+data(untreatedFuncMat)
+data(untreatedAnnots)
+untreated.df <- bind_rows(ref.df %>% mutate(Treatment='unstimulated'),
+                          data.frame(untreatedAnnots,
+                                     untreatedPhenoMat,
+                                     untreatedFuncMat)) %>% 
+  mutate(Treatment=factor(Treatment),
+         Treatment=relevel(Treatment,'unstimulated'))
+
+## -----------------------------------------------------------------------------
+tcells.df <- untreated.df %>% 
+  filter(Cells %in% c('cd4+','cd8+'))
+tcells.df %>% 
+  count(Cells,Treatment)
+
+## -----------------------------------------------------------------------------
+func.S <- make.S(dimnames(refFuncMat)[[2]])
+func.sim <- cosine(as.matrix(tcells.df[,row.names(func.S)]))
+optim.func <- do.optim(func.S,func.sim,iter=100,n=1000)
+func.S <- make.S(tail(optim.func$best,1)[[1]])
+func.rv <- do.radviz(tcells.df,func.S,trans=trans)
+
+## ----fid.width=9--------------------------------------------------------------
+smoothRadviz(subset(func.rv,tcells.df$Treatment=='unstimulated'))+
+  facet_grid(~Cells)
+
+## ----fig.width=9--------------------------------------------------------------
+plot(func.rv)+
+  geom_density2d(aes(color=Treatment))+
+  facet_grid(~Cells)
+
+## ----fig.width=9--------------------------------------------------------------
+tcells.df %>% 
+  select(Cells, Treatment, pS6, pSlp76) %>% 
+  gather('Channel','value',one_of('pS6','pSlp76')) %>% 
+  ggplot(aes(x=Treatment,y=value))+
+  geom_boxplot(aes(fill=Treatment))+
+  facet_grid(Channel~Cells)+
+  theme_light()+
+  theme(axis.text.x=element_text(angle=45,hjust=1))
 
