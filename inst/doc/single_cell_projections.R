@@ -1,5 +1,7 @@
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::opts_chunk$set(warning=FALSE,
+                      fig.height = 6,
+                      fig.width = 8,
                       fig.retina=1,
                       fig.keep='high',
                       fig.align='center')
@@ -151,16 +153,16 @@ optim.func <- do.optim(func.S,func.sim,iter=100,n=1000)
 func.S <- make.S(tail(optim.func$best,1)[[1]])
 func.rv <- do.radviz(tcells.df,func.S,trans=trans)
 
-## ----fid.width=9--------------------------------------------------------------
+## ----fig.width=12-------------------------------------------------------------
 smoothRadviz(subset(func.rv,tcells.df$Treatment=='unstimulated'))+
   facet_grid(~Cells)
 
-## ----fig.width=9--------------------------------------------------------------
+## ----fig.width=12-------------------------------------------------------------
 plot(func.rv)+
   geom_density2d(aes(color=Treatment))+
   facet_grid(~Cells)
 
-## ----fig.width=9--------------------------------------------------------------
+## -----------------------------------------------------------------------------
 tcells.df %>% 
   select(Cells, Treatment, pS6, pSlp76) %>% 
   gather('Channel','value',one_of('pS6','pSlp76')) %>% 
