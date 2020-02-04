@@ -1,7 +1,7 @@
 Package: Radviz
 Type: Package
 Title: Project Multidimensional Data in 2D Space
-Version: 0.8.1
+Version: 0.8.2
 Authors@R: person('Yann','Abraham',email='yann.abraham@gmail.com',role=c('aut','cre'))
 Depends: R (>= 3.0)
 Imports: ggplot2, dplyr, rlang, stats, utils
@@ -20,8 +20,8 @@ RoxygenNote: 7.0.1
 VignetteBuilder: knitr
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2020-01-10 15:06:05 UTC; ayann
+Packaged: 2020-02-04 09:08:32 UTC; ayann
 Author: Yann Abraham [aut, cre]
 Maintainer: Yann Abraham <yann.abraham@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-01-10 17:00:02 UTC
+Date/Publication: 2020-02-04 09:30:03 UTC

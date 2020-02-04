@@ -133,12 +133,19 @@ bubbleRadviz(ct.rv,group = 'Cells',color='pS6')
 data(untreatedPhenoMat)
 data(untreatedFuncMat)
 data(untreatedAnnots)
-untreated.df <- bind_rows(ref.df %>% mutate(Treatment='unstimulated'),
+untreated.df <- bind_rows(ref.df %>% 
+                            mutate(Treatment='unstimulated',
+                                   Source=as.character(Source),
+                                   Cells=as.character(Cells)),
                           data.frame(untreatedAnnots,
                                      untreatedPhenoMat,
-                                     untreatedFuncMat)) %>% 
+                                     untreatedFuncMat) %>% 
+                            mutate(Treatment=as.character(Treatment),
+                                   Source=as.character(Source),
+                                   Cells=as.character(Cells))) %>% 
   mutate(Treatment=factor(Treatment),
-         Treatment=relevel(Treatment,'unstimulated'))
+         Treatment=relevel(Treatment,'unstimulated'),
+         Cells=factor(Cells))
 
 ## -----------------------------------------------------------------------------
 tcells.df <- untreated.df %>% 
