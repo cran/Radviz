@@ -37,14 +37,14 @@ ct.S <- make.S(dimnames(refPhenoMat)[[2]])
 ## -----------------------------------------------------------------------------
 ## compute the similarity matrix
 ct.sim <- cosine(as.matrix(ref.df[,row.names(ct.S)]))
-## the current radviz-independent measure of projection efficiency
+## the current Radviz-independent measure of projection efficiency
 in.da(ct.S,ct.sim)
-## the current radviz-independent measure of projection efficiency
+## the current Radviz-independent measure of projection efficiency
 rv.da(ct.S,ct.sim)
 
 ## -----------------------------------------------------------------------------
-optim.ct <- do.optim(ct.S,ct.sim,iter=100,n=1000)
-ct.S <- make.S(tail(optim.ct$best,1)[[1]])
+optim.ct <- do.optimRadviz(ct.S,ct.sim,iter=100,n=1000)
+ct.S <- make.S(get.optim(optim.ct))
 
 ## ----echo=FALSE,results='asis'------------------------------------------------
 ksink <- lapply(dimnames(refPhenoMat)[[2]],function(x) cat(' *',x,'\n'))
@@ -156,7 +156,7 @@ tcells.df %>%
 ## -----------------------------------------------------------------------------
 func.S <- make.S(dimnames(refFuncMat)[[2]])
 func.sim <- cosine(as.matrix(tcells.df[,row.names(func.S)]))
-optim.func <- do.optim(func.S,func.sim,iter=100,n=1000)
+optim.func <- do.optimRadviz(func.S,func.sim,iter=100,n=1000)
 func.S <- make.S(tail(optim.func$best,1)[[1]])
 func.rv <- do.radviz(tcells.df,func.S,trans=trans)
 
