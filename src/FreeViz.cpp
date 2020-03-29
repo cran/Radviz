@@ -107,7 +107,7 @@ void computeForcesDiscrete(TPoint *pts, const TPoint *ptse, const int *classes,
 
     /**** Repulsive forces ****/
 
-    if ((repelG != 0.0) && classesi[2]) {
+    if ((repelG != 0.0) && *classesi < classese[-1]) {
 
       for(ptsi = pts + *classesi, ptsie = pts + classesi[1], Fri = Fr + *classesi; ptsi != ptsie; ptsi++, Fri++) {
         for(ptsi2 = ptsie, Fri2 = Fr + classesi[1]; ptsi2 != ptse; ptsi2++, Fri2++) {
@@ -421,21 +421,6 @@ symmetricTransformation(anc, ance, mirrorSymmetry != 0);
 //    pts++;
 //    pointsReal[1] = pts->y;
 
-//   // Free up memory
-   free(X);
-//   free(anc);
-////   free(ll);
-////   if (contClass < 2)
-//   free(classes);
-//
-//   free(danc);
-   free(pts);
-   free(Fa);
-//   free(Fr);
-////   xfree(Fr);
-////   xfree(sum);
-////   xfree(rad);
-
 //   return anchors;
 //
 //// PyCATCH;
@@ -461,6 +446,21 @@ for(anci = anc, i = 0; i < nAttrs; i++, anci++) {
 	newAnchors(i,0) = anci->x;
 	newAnchors(i,1) = anci->y;
 }
+
+//   // Free up memory
+   free(X);
+   free(anc);
+////   free(ll);
+////   if (contClass < 2)
+   free(classes);
+//
+   free(danc);
+   free(pts);
+   free(Fa);
+   free(Fr);
+////   xfree(Fr);
+////   xfree(sum);
+////   xfree(rad);
 
 	return(newAnchors);
 }

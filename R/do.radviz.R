@@ -27,6 +27,7 @@
 #'            			\item \code{rvalid} an index of points corresponding to an invalid projection (any \code{rx} or \code{ry} is NA)
 #' 				}
 #' 				\item \code{type}: character string specifying the method used for obtaining the springs.
+#' 				\item \code{trans}: the function used to transform the data.
 #'        \item \code{graphEdges}: when the input \code{graph} is provided (for a Graphviz analysis),
 #'              this slot will contain a dataframe with the graph edges
 #' } 
@@ -105,7 +106,8 @@ do.radviz <- function(x,
                    xlim(lims)+
                    ylim(lims)+
                    theme_radviz(),
-		   		type=type)
+		   		type=type,
+		   		trans=trans)
 		
 		if(!is.null(graph)){
 			radviz$graphEdges <- igraph::as_data_frame(graph)

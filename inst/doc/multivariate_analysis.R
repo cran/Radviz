@@ -10,7 +10,7 @@ library(scales)
 library(igraph)
 library(Radviz)
 
-knitr::opts_chunk$set(warning=FALSE,
+knitr::opts_chunk$set(warning=TRUE,
                       fig.keep='high',
                       fig.align='center',
                       fig.height = 5,
@@ -141,8 +141,20 @@ plot(btcells.fv)+
   theme_radviz(base_size = 16)
 
 ## -----------------------------------------------------------------------------
+btcells.fv <- rescalePlot(btcells.fv,fraction=0.5)
+
+## -----------------------------------------------------------------------------
+plot(btcells.fv)+
+  geom_point(aes(color=Treatment))
+
+## -----------------------------------------------------------------------------
 contour(btcells.fv,
         color='Treatment')
+
+## -----------------------------------------------------------------------------
+plot(btcells.fv,
+     anchors.filter = 0.5)+
+  geom_point(aes(color=Treatment))
 
 ## -----------------------------------------------------------------------------
 btcells.dist <- as.matrix(btcells.df[,btcells.channels])
