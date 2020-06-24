@@ -1,11 +1,12 @@
 Package: Radviz
 Type: Package
 Title: Project Multidimensional Data in 2D Space
-Version: 0.9.1
+Version: 0.9.2
 Authors@R: c(person('Yann','Abraham',email='yann.abraham@gmail.com',role=c('aut','cre')),
              person('Nicolas','Sauwen',email='nicolas.sauwen@openanalytics.eu',role=c('aut')))
 Depends: R (>= 3.0)
-Imports: ggplot2, dplyr, rlang, stats, utils, igraph, pracma, hexbin
+Imports: ggplot2, dplyr, rlang, stats, utils, igraph, pracma, hexbin,
+        Rcpp
 Suggests: knitr, rmarkdown, bodenmiller, tidyr, RColorBrewer, cytofan,
         scales
 LinkingTo: Rcpp, RcppArmadillo
@@ -24,9 +25,9 @@ RoxygenNote: 7.0.1
 VignetteBuilder: knitr
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2020-03-27 11:07:36 UTC; ayann
+Packaged: 2020-06-24 18:39:39 UTC; ayann
 Author: Yann Abraham [aut, cre],
   Nicolas Sauwen [aut]
 Maintainer: Yann Abraham <yann.abraham@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-03-29 14:20:03 UTC
+Date/Publication: 2020-06-24 19:20:03 UTC
