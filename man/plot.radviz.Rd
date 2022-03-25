@@ -25,19 +25,19 @@
 
 \item{anchors.only}{by default only plot the anchors so that other methods can easily be chained}
 
-\item{anchors.filter}{filter out anchors with low contributions to the projection}
+\item{anchors.filter}{filter out anchors with low contributions to the projection (superseded)}
 
 \item{label.color}{the color of springs for visualization}
 
-\item{label.size}{the size of labels}
+\item{label.size}{the size of the anchors (see \href{https://ggplot2.tidyverse.org/articles/articles/faq-customising.html}{customizing ggplot2} for details on default value)}
 
-\item{point.color}{deprecated, use \code{\link{geom_point}} instead}
+\item{point.color}{deprecated, use \code{\link[ggplot2]{geom_point}} instead}
 
-\item{point.shape}{deprecated, use \code{\link{geom_point}} instead}
+\item{point.shape}{deprecated, use \code{\link[ggplot2]{geom_point}} instead}
 
-\item{point.size}{deprecated, use \code{\link{geom_point}} instead}
+\item{point.size}{deprecated, use \code{\link[ggplot2]{geom_point}} instead}
 
-\item{add}{deprecated, use \code{\link{geom_point}} instead}
+\item{add}{deprecated, use \code{\link[ggplot2]{geom_point}} instead}
 
 \item{...}{further arguments to be passed to or from other methods (not implemented)}
 }
@@ -48,9 +48,13 @@ the internal ggplot2 object, allowing for extra geoms to be added
 Plots the Dimensional Anchors and projected data points in a 2D space.
 }
 \details{
-by default the plot function only shows the anchors. Extra geoms are required to display the data.
-When \code{anchors.filter} is a number and type is not Radviz, any springs whose length is lower than this number will be filtered out 
-of the visualization. This has no effect on the projection itself.
+by default the plot function only shows the anchors. Extra geoms are 
+required to display the data.
+When \code{anchors.filter} is a number and type is not Radviz, any springs 
+whose length is lower than this number will be filtered out 
+of the visualization. This has no effect on the projection itself. Please note
+that this parameter is being superseded by the \code{\link{anchor.filter}} 
+function.
 }
 \examples{
 data(iris)

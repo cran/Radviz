@@ -9,6 +9,7 @@ do.radviz(
   x,
   springs,
   trans = do.L,
+  scaling = 1,
   label.color = "orangered4",
   label.size = NA,
   type = NULL,
@@ -22,9 +23,11 @@ do.radviz(
 
 \item{trans}{a transformation to be applied to the data before projection}
 
-\item{label.color}{the color of springs for visualization}
+\item{scaling}{a scaling factor applied to data before the projection.}
 
-\item{label.size}{the size of labels}
+\item{label.color}{deprecated, use \code{\link{plot.radviz}} instead}
+
+\item{label.size}{deprecated, use \code{\link{plot.radviz}} instead}
 
 \item{type}{character string specifying the method used for obtaining the springs. 
 Current methods are: Radviz, Freeviz and Graphviz. When not provided, \code{type} is 
@@ -42,6 +45,7 @@ an object of class radviz with the following slots:
            			\item \code{rx} and \code{ry} the X and Y coordinates of the radviz projection of \code{x} over \code{springs}
            			\item \code{rvalid} an index of points corresponding to an invalid projection (any \code{rx} or \code{ry} is NA)
 				}
+				\item \code{springs}: the matrix containing the spring coordinates.
 				\item \code{type}: character string specifying the method used for obtaining the springs.
 				\item \code{trans}: the function used to transform the data.
        \item \code{graphEdges}: when the input \code{graph} is provided (for a Graphviz analysis),
@@ -54,8 +58,13 @@ defined by dimensional anchors that have been projected on the unit circle using
 \code{\link{make.S}}
 }
 \details{
-The function expects that at least some of the column names in df will be matched
-           by row names in springs
+The function expects that at least some of the column names in x 
+will be matched by all row names in springs.
+The scaling factor can be used to increase the distance between points, 
+making it useful in situations where all points are pulled together either 
+because of similar values or large number of channels.
+The scaling is applied **after** the transformation by \code{trans}.
+The scaling idea is taken from [Artur & Minghim 2019](https://doi.org/10.1016/j.cag.2019.08.015).
 }
 \examples{
 data(iris)

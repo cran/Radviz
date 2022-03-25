@@ -10,8 +10,8 @@
   main = NULL,
   labels = NULL,
   size = FALSE,
-  label.color,
-  label.size,
+  label.color = NULL,
+  label.size = NULL,
   adj,
   pos,
   offset,
@@ -33,25 +33,25 @@
 
 \item{size}{[Logical] if \code{TRUE} labels are sized after the number of points they correspond to}
 
-\item{label.color}{deprecated, see \code{\link{do.radviz}}}
+\item{label.color}{the color of springs for visualization}
 
-\item{label.size}{deprecated, see \code{\link{do.radviz}}}
+\item{label.size}{the size of the anchors (see \href{https://ggplot2.tidyverse.org/articles/articles/faq-customising.html}{customizing ggplot2} for details on default value)}
 
-\item{adj}{deprecated, see \code{\link{geom_text}} instead}
+\item{adj}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{pos}{deprecated, see \code{\link{geom_text}} instead}
+\item{pos}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{offset}{deprecated, see \code{\link{geom_text}} instead}
+\item{offset}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{vfont}{deprecated, see \code{\link{geom_text}} instead}
+\item{vfont}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{cex}{deprecated, see \code{\link{geom_text}} instead}
+\item{cex}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{col}{deprecated, see \code{\link{geom_text}} instead}
+\item{col}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{font}{deprecated, see \code{\link{geom_text}} instead}
+\item{font}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 
-\item{add}{deprecated, see \code{\link{geom_text}} instead}
+\item{add}{deprecated, see \code{\link[ggplot2]{geom_text}} instead}
 }
 \description{
 Text draws the strings given in the vector labels at the coordinates given by the radviz projection

@@ -38,3 +38,14 @@ After some testing the following enhancements have been made to the code:
  - fixed Rcpp import in do.optimFreeviz and do.optimGraphviz
  - springs()` now returns the spring matrix rather than simply the channel names
 
+# 2020-11-13
+
+ - reinstated the label options in `text.radviz`
+ - implemented anchor filtering for `freeviz` as a separate function
+
+# 2022-03-24
+
+ - changed some defaults in the plotting function to enable interactive visualitations through `plotly`
+ - added a scaling factor to the `do.radviz` function to counteract the compressing effect of a large number of springs
+ - plotting functions now use `plot.radviz` internally to avoid code duplication
+ - cleaned up links in the documentation

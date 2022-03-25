@@ -9,7 +9,9 @@
 #' @param n the number of lines from each slots in the Radviz object to display (defaults to 6)
 #' @param ...	further arguments to be passed to or from other methods (not implemented)
 #' 
-#' @details \code{dim} returns the number of points and the number of dimensions used for the projection
+#' @details \code{dim} returns the number of points and the number of dimensions 
+#' used for the projection.
+#' \code{print} returns invisibly the data, including the projected coordinates
 #' 
 #' @example examples/example-do.radviz.R
 #' @examples
@@ -28,7 +30,7 @@ summary.radviz <- function(object,...,n=6) {
   if(any(object$proj$data$rvalid)) {
     cat(sum(object$proj$data$rvalid),'point(s) could not be projected\n')
   }
-  das <- springs(object)
+  das <- rownames(springs(object))
   if(length(das)>n) {
     das <- das[seq(1,n)]
     das <- c(das,'...')
@@ -55,15 +57,12 @@ dim.radviz <- function(x) {
 #' @method print radviz
 #' @export
 print.radviz <- function(x,...) {
-  print(x$proj)
+  plot.radviz(x)
   return(invisible(x$proj$data))
 }
 
 #' @rdname summary.radviz
 #' @export
 springs <- function(x) {
-  df <- x$proj$layers[[1]]$data
-  springs <- as.matrix(df[,c('X1','X2')])
-  rownames(springs) <- as.character(df$Channel)
-  return(springs)
+  return(x$springs)
 }

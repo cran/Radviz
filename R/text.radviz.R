@@ -7,16 +7,16 @@
 #' @param labels the name of the variable used for labeling (see details)
 #' @param size [Logical] if \code{TRUE} labels are sized after the number of points they correspond to
 #' @param ...	further arguments to be passed to or from other methods (not implemented)
-#' @param label.color deprecated, see \code{\link{do.radviz}}
-#' @param label.size deprecated, see \code{\link{do.radviz}}
-#' @param adj deprecated, see \code{\link{geom_text}} instead
-#' @param pos deprecated, see \code{\link{geom_text}} instead
-#' @param offset deprecated, see \code{\link{geom_text}} instead
-#' @param vfont deprecated, see \code{\link{geom_text}} instead
-#' @param cex deprecated, see \code{\link{geom_text}} instead
-#' @param col deprecated, see \code{\link{geom_text}} instead
-#' @param font deprecated, see \code{\link{geom_text}} instead
-#' @param add deprecated, see \code{\link{geom_text}} instead
+#' @param label.color the color of springs for visualization
+#' @param label.size the size of the anchors (see \href{https://ggplot2.tidyverse.org/articles/articles/faq-customising.html}{customizing ggplot2} for details on default value)
+#' @param adj deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param pos deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param offset deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param vfont deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param cex deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param col deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param font deprecated, see \code{\link[ggplot2]{geom_text}} instead
+#' @param add deprecated, see \code{\link[ggplot2]{geom_text}} instead
 #' 
 #' @example examples/example-do.radviz.R
 #' @examples
@@ -27,15 +27,15 @@
 #' @importFrom stats median reorder
 #' @importFrom dplyr `%>%` filter select mutate group_by summarise_at count left_join .data sym
 #' @importFrom rlang `:=` 
-#' @importFrom ggplot2 ggtitle aes_string geom_text scale_radius
+#' @importFrom ggplot2 aes_string geom_text scale_radius
 #' 
 #' @export
 text.radviz <- function (x,..., 
                          main=NULL, 
                          labels = NULL,
                          size = FALSE,
-                         label.color,
-                         label.size,
+                         label.color = NULL,
+                         label.size = NULL,
                          adj,
                          pos,
                          offset,
@@ -45,10 +45,6 @@ text.radviz <- function (x,...,
                          font,
                          add) {
   ## check for deprecated arguments
-  if(!missing(label.color))
-    warning('label.color is a deprecated argument, use plot(x)+geom_text() and custom data and mappings to change plot.',call. = FALSE)
-  if(!missing(label.size))
-    warning('label.size is a deprecated argument, use plot(x)+geom_text() and custom data and mappings to change plot.',call. = FALSE)
   if(!missing(adj))
     warning('adj is a deprecated argument, use plot(x)+geom_text() and custom data and mappings to change plot.',call. = FALSE)
   if(!missing(pos))
@@ -78,8 +74,10 @@ text.radviz <- function (x,...,
     stop('labels must be a valid grouping column')
   }
   
-  p <- x$proj+
-    ggtitle(main)
+  p <- plot.radviz(x,
+                   main = main,
+                   label.color = label.color,
+                   label.size = label.size)
   
   dims <- c('rx','ry')
   

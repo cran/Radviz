@@ -152,8 +152,8 @@ contour(btcells.fv,
         color='Treatment')
 
 ## -----------------------------------------------------------------------------
-plot(btcells.fv,
-     anchors.filter = 0.5)+
+plot(anchor.filter(btcells.fv,
+                   lim=0.5))+
   geom_point(aes(color=Treatment))
 
 ## -----------------------------------------------------------------------------
