@@ -1,5 +1,5 @@
-14239fc2d2f7164dde1d6682d259f967 *DESCRIPTION
-6da279da6cdee450ef10baa52656d7bf *NAMESPACE
+75b0f3bb61a5240ae1cf5664308168af *DESCRIPTION
+d01d7404d18f03aa603a5088582d88c7 *NAMESPACE
 c78cd977d9ed9b1c51aeb5004753c153 *NEWS.md
 be596d6a2618b8a88c8238e7dd9a0f8c *R/DB_weightedIdx.R
 27709775c3dde27db39f1bdde284fee8 *R/Helper-functions.R
@@ -25,7 +25,7 @@ f958a910159ea5483263b61a700ffff6 *R/hexplot.R
 47535cf436a1624f24d29df8eb8249c3 *R/is.radviz.R
 6203e6c2d687fd7eb22341311fd7d1d5 *R/is.valid.R
 7d729b2245d6298d6b5f7d83077f5375 *R/make.S.R
-9a216db2a2913d4af84c6e943375942f *R/plot.radviz.R
+510e9b9c9a848a049a43f1bcbeb02d47 *R/plot.radviz.R
 1868746d4a4e26baaa40f12b72a336cf *R/recenter.R
 226855eca14f546a821d79f09d50f635 *R/rescalePlot.R
 51d9212aa8a15b61a93f9c3991a745a4 *R/smoothRadviz.R
@@ -36,10 +36,10 @@ f958a910159ea5483263b61a700ffff6 *R/hexplot.R
 f96c733ac2f801d8540f198f6996470d *build/vignette.rds
 e148e2ef58f5d9ae09af74280a8f9117 *inst/doc/multivariate_analysis.R
 0304f2fa0d9e31d7eb8cb96827a11138 *inst/doc/multivariate_analysis.Rmd
-0d9fb015cb9b9c7484d79a0d22c32aaf *inst/doc/multivariate_analysis.html
+ff3e87ccf3a0117198d51bd846b58443 *inst/doc/multivariate_analysis.html
 985e362402c1d6169ea31e0003245eca *inst/doc/single_cell_projections.R
 6d70a4a15a2456b616be5edeebcc0e50 *inst/doc/single_cell_projections.Rmd
-8460cfb01c5eaddc6cf0af50009f8384 *inst/doc/single_cell_projections.html
+77e491060ed83d876e75ca26822bbc1e *inst/doc/single_cell_projections.html
 85510ef08357b4da15ebf04d69333f49 *man/DB_weightedIdx.Rd
 5dc7b896ed57ae6998c98be040017c8a *man/Radviz-deprecated.Rd
 4e9d10f27c996085d64476654e794232 *man/Radviz-package.Rd
